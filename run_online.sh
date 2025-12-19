@@ -1,7 +1,7 @@
 #!/bin/bash
 python3 online_test.py \
-	--root_path /Users/A.Gunduz/Desktop/git/Real-time-GesRec/\
-	--video_path /data2/EgoGesture/images \
+	--root_path /home/murakami/ResNeXt_test/\
+	--video_path /mnt/content/DATASET/EgoGesture/images \
 	--annotation_path annotation_EgoGesture/egogestureall.json \
 	--resume_path_det report/egogesture_resnetl_10_Depth_8_9939.pth \
 	--resume_path_clf report/egogesture_resnext_101_Depth_32_9403.pth  \
