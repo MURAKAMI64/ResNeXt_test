@@ -5,8 +5,6 @@ python3 online_test.py \
 	--annotation_path annotation_EgoGesture/egogestureall.json \
 	--resume_path_det report/egogesture_resnetl_10_Depth_8.pth \
 	--resume_path_clf report/egogesture_resnext_101_Depth_32.pth  \
-	# --resume_path_det report/egogesture_resnetl_10_Depth_8_9939.pth \
-	# --resume_path_clf report/egogesture_resnext_101_Depth_32_9403.pth  \
 	--result_path results \
 	--dataset egogesture    \
 	--sample_duration_det 8 \
