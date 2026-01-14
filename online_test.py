@@ -122,7 +122,7 @@ def load_models(opt):
     if opt.resume_path:
         print('loading checkpoint {}'.format(opt.resume_path))
         checkpoint = torch.load(opt.resume_path)
-#        assert opt.arch == checkpoint['arch']
+        # assert opt.arch == checkpoint['arch']
 
         classifier.load_state_dict(checkpoint['state_dict'])
         # state_dict_clf = checkpoint['state_dict'] # 変数名はコードに合わせて調整してください
@@ -141,6 +141,10 @@ def load_models(opt):
 
 
 detector, classifier = load_models(opt)
+
+if not opt.no_cuda:
+    detector = detector.cuda()
+    classifier = classifier.cuda()
 
 if opt.no_mean_norm and not opt.std_norm:
     norm_method = Normalize([0, 0, 0], [1, 1, 1])
@@ -226,6 +230,9 @@ for path in test_paths[:]:
                 inputs_det = inputs[:, -1, -opt.sample_duration_det:, :, :].unsqueeze(1)
             elif opt.modality_det == 'RGB-D':
                 inputs_det = inputs[:, :, -opt.sample_duration_det:, :, :]
+
+            if not opt.no_cuda:
+                inputs_det = inputs_det.cuda()
 
             outputs_det = detector(inputs_det)
             outputs_det = F.softmax(outputs_det, dim=1)
