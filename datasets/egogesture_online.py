@@ -150,7 +150,20 @@ def make_dataset( annotation_path, video_path , whole_path,sample_duration, n_sa
             }
         
         # print(range(_    - int(sample_duration/8), _   ))
-        counts = np.bincount(label_list[np.array(list(range(_    - int(sample_duration/8), _   )))])
+        # 修正前:
+        # counts = np.bincount(label_list[np.array(list(range(_    - int(sample_duration/8), _   )))])
+
+        # 修正後:
+        # 範囲の終点（_）が label_list の長さを超えないように制限する
+        end_idx = min(_, len(label_list))
+        start_idx = max(0, end_idx - int(sample_duration/8))
+
+        if start_idx < end_idx:
+            indices = np.arange(start_idx, end_idx)
+            counts = np.bincount(label_list[indices])
+        else:
+            # 万が一、範囲がおかしくなった場合の回避処理
+            counts = np.array([0])
         sample['label'] = np.argmax(counts)
         if n_samples_for_each_video == 1:
             sample['frame_indices'] = list(range(_ , _ + sample_duration))
