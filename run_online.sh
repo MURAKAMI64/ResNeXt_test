@@ -35,4 +35,4 @@ python3 online_test.py \
 	--clf_threshold_pre 0.6 \
 	--clf_threshold_final 0.15 \
 	--stride_len 1 \
-	--no_cuda False \
+	# --no_cuda \
