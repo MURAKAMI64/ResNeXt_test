@@ -136,10 +136,10 @@ class ResNet(nn.Module):
             block, 512, layers[3], shortcut_type, stride=2)
         last_duration = int(math.ceil(sample_duration / 16))
         last_size = int(math.ceil(sample_size / 32))
-        # self.avgpool = nn.AvgPool3d(
-        #     (last_duration, last_size, last_size), stride=1)
+        self.avgpool = nn.AvgPool3d(
+            (last_duration, last_size, last_size), stride=1)
         # 修正後（入力サイズに関わらず 1x1x1 に圧縮する設定）
-        self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
+        # self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
         for m in self.modules():
