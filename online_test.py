@@ -20,6 +20,8 @@ import pdb
 import numpy as np
 import datetime
 
+from collections import OrderedDict
+
 
 def weighting_func(x):
     return (1 / (1 + np.exp(-0.2 * (x - 9))))
@@ -70,7 +72,14 @@ def load_models(opt):
         checkpoint = torch.load(opt.resume_path)
         #assert opt.arch == checkpoint['arch']
 
-        detector.load_state_dict(checkpoint['state_dict'])
+        # detector.load_state_dict(checkpoint['state_dict'])
+        # Detectorのロード部分
+        state_dict_det = checkpoint['state_dict']
+        new_state_dict_det = OrderedDict()
+        for k, v in state_dict_det.items():
+            name = k[7:] if k.startswith('module.') else k  # 'module.'を取り除く
+            new_state_dict_det[name] = v
+        detector.load_state_dict(new_state_dict_det)
 
     print('Model 1 \n', detector)
     pytorch_total_params = sum(p.numel() for p in detector.parameters() if
@@ -115,7 +124,13 @@ def load_models(opt):
         checkpoint = torch.load(opt.resume_path)
 #        assert opt.arch == checkpoint['arch']
 
-        classifier.load_state_dict(checkpoint['state_dict'])
+        # classifier.load_state_dict(checkpoint['state_dict'])
+        state_dict_clf = checkpoint['state_dict'] # 変数名はコードに合わせて調整してください
+        new_state_dict_clf = OrderedDict()
+        for k, v in state_dict_clf.items():
+            name = k[7:] if k.startswith('module.') else k
+            new_state_dict_clf[name] = v
+        classifier.load_state_dict(new_state_dict_clf)
 
     print('Model 2 \n', classifier)
     pytorch_total_params = sum(p.numel() for p in classifier.parameters() if
