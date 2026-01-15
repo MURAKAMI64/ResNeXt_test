@@ -3,8 +3,8 @@ python3 online_test.py \
 	--root_path /home/murakami/ResNeXt_test/\
 	--video_path /mnt/content/DATASET/EgoGesture/images/test/ \
 	--annotation_path annotation_EgoGesture/egogestureall.json \
-	--resume_path_det report/egogesture_resnetl_10_RGB_8.pth \
-	--resume_path_clf report/egogesture_resnext_101_RGB_32.pth  \
+	--resume_path_det report/egogesture_resnetl_10_Depth_8.pth \
+	--resume_path_clf report/egogesture_resnext_101_Depth_32.pth  \
 	--result_path results \
 	--dataset egogesture    \
 	--sample_duration_det 8 \
@@ -22,8 +22,8 @@ python3 online_test.py \
 	--n_finetune_classes_clf 83 \
 	--n_threads 16 \
 	--checkpoint 1 \
-	--modality_det RGB \
-	--modality_clf RGB \
+	--modality_det Depth \
+	--modality_clf Depth \
 	--n_val_samples 1 \
 	--train_crop random \
 	--test_subset test  \
